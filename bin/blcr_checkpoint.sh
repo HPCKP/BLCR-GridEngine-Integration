@@ -1,6 +1,10 @@
 #!/bin/sh
 set +u
 
+source /etc/profile.d/modules.sh
+module load blcr
+
+
 ckpt_dir=$SGE_O_WORKDIR
 if [ ! -f $ckpt_dir/ckpt.log ]; then
   touch $ckpt_dir/ckpt.log
@@ -32,7 +36,7 @@ echo `pstree -p $pid` >> $ckpt_dir/ckpt.log 2>&1
 cpid=`pstree -p $pid | head -1 | perl -pe '$p="g\?time"; $p=cr_restart  if(/cr_restart\(\d+\)/);s/.*-$p\(\d+\)[-\+]+[^(]+\((\d+)\)/$1/g;'`
 echo Checkpoint command: cr_checkpoint -f $ckptfile --run $cpid >> $ckpt_dir/ckpt.log 2>&1 
 echo $cpid > $ckpt_dir/pid.log
-/usr/bin/cr_checkpoint -f $ckptfile --run $cpid
+cr_checkpoint -f $ckptfile --run $cpid
 cc=$?
 if [ $cc -eq 0 ]; then
   echo $currcpr > currcpr

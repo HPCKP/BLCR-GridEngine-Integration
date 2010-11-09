@@ -1,6 +1,9 @@
 #!/bin/sh
 set +u
 
+source /etc/profile.d/modules.sh
+module load blcr
+
 ckpt_dir=$SGE_O_WORKDIR
 if [ ! -f $ckpt_dir/ckpt.log ]; then
   touch $ckpt_dir/ckpt.log
@@ -30,7 +33,7 @@ pid=$2
 echo `pstree -p $pid` >> $ckpt_dir/ckpt.log 2>&1
 cpid=`pstree -p $pid | awk -F "(" '{ print $NF }' | awk -F ")" '{ print $1}'`
 echo Checkpoint(Suspend) command: cr_checkpoint -f $ckptfile --stop $cpid >> $ckpt_dir/ckpt.log 2>&1 
-/usr/bin/cr_checkpoint -f $ckptfile --stop $cpid
+cr_checkpoint -f $ckptfile --stop $cpid
 cc=$?
 if [ $cc -eq 0 ]; then
   echo $currcpr > currcpr

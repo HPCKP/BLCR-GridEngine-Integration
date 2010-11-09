@@ -1,6 +1,9 @@
 #!/bin/sh
 set +u
 
+source /etc/profile.d/modules.sh
+module load blcr
+
 ckpt_dir=$SGE_O_WORKDIR
 
 if [ ! -f $ckpt_dir/ckpt.log ]; then
