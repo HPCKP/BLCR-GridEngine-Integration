@@ -1,8 +1,11 @@
 #!/bin/sh
 set +u
 
-source /etc/profile.d/modules.sh
-module load blcr
+#source /etc/profile.d/modules.sh
+#module load blcr
+export PATH=/aplic/BLCR/0.8.2/bin:$PATH
+export LD_LIBRARY_PATH=/aplic/BLCR/0.8.2/lib:$LD_LIBRARY_PATH
+
 
 ckpt_dir=$SGE_O_WORKDIR
 if [ ! -f $ckpt_dir/ckpt.log ]; then

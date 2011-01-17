@@ -2,8 +2,11 @@
 
 export SGE_CKPT_DIR=$SGE_O_WORKDIR
 export tmpdir=${SGE_CKPT_DIR}/ckpt.${JOB_ID}
-source /etc/profile.d/modules.sh
-module load blcr
+#source /etc/profile.d/modules.sh
+#module load blcr
+export PATH=/aplic/BLCR/0.8.2/bin:$PATH
+export LD_LIBRARY_PATH=/aplic/BLCR/0.8.2/lib:$LD_LIBRARY_PATH
+
 
 # Test if restarted/migrated
 if [ $RESTARTED = 0 ]; then
